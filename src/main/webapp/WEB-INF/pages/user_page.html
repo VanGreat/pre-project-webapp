@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User_Page</title>
+</head>
+<body>
+<table border="1" style="background-color: gold">
+    <tbody>
+    <tr style="background-color: silver">
+        <th><h3 th:text="ID"></h3></th>
+        <th><h3 th:text="Name"></h3></th>
+        <th><h3 th:text="Email"></h3></th>
+        <th><h3 th:text="Login"></h3></th>
+        <th><h3 th:text="Password"></h3></th>
+    </tr>
+    <tr style="background-color: silver">
+        <td><a th:text="${user.getId()}">ID</a></td>
+        <td><a th:text="${user.getName()}">Name</a></td>
+        <td><a th:text="${user.getEmail()}">Email</a></td>
+        <td><a th:text="${user.getLogin()}">Login</a></td>
+        <td><a th:text="${user.getPassword()}">Password</a></td>
+    </tr>
+    <tr style="background-color: silver">
+        <form th:method="POST" th:action="@{/all_users/{id}(id=${user.getId()})}" th:object="${user}">
+            <td><input type="submit" value="EDIT!" style="background-color: gold"></td>
+            <td><input th:field="*{name}" type="text" th:value="${user.getName()}"/></td>
+            <td><input th:field="*{email}" type="text" th:value="${user.getEmail()}"/></td>
+            <td><input th:field="*{login}" type="text" th:value="${user.getLogin()}"/></td>
+            <td><input th:field="*{password}" type="text" th:value="${user.getPassword()}"/></td>
+        </form>
+        <a th:href="@{/all_users}"><input type="submit" value="RETURN" style="background-color: gold"></a>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

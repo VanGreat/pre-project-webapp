@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>users</title>
+</head>
+<body>
+<table border="1" style="background-color: gold">
+    <tbody>
+    <tr style="background-color: silver">
+        <th colspan="4">
+            <h3>All Users</h3>
+        </th>
+    </tr>
+    <tr style="background-color: silver">
+        <th><h4 th:text="Name"></h4></th>
+        <th><h4 th:text="Email"></h4></th>
+        <th><h4>User Page</h4></th>
+        <th><h4>Delete</h4></th>
+    </tr>
+    <tr th:each="user : ${users}" style="background-color: silver">
+        <td><a th:text="${user.getName()}">Name</a></td>
+        <td><a th:text="${user.getEmail()}">Email</a></td>
+        <td>
+            <a th:href="@{/all_users/{id}(id=${user.getId()})}">
+                <input type="submit" value="SHOW/EDIT" style="background-color: gold"/>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/all_users/remove_user/{id}(id=${user.getId()})}">
+                <input type="submit" value="DELETE" style="background-color: gold"/>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
