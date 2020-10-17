@@ -18,8 +18,8 @@ public class User implements UserDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "surname")
+    private String surname;
 
     @Column(name = "login")
     private String login;
@@ -27,27 +27,18 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "users", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     private Set<Role> roles;
 
-    public User() {
+    public User() { }
 
-    }
-
-    public User(String name, String email, String login, String password) {
+    public User(String name, String surname, String login, String password) {
         this.name = name;
-        this.email = email;
+        this.surname = surname;
         this.login = login;
         this.password = password;
-    }
-
-    public User(String name, String email, String login, String password, Set<Role> roles) {
-        this.name = name;
-        this.email = email;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
     }
 
     public Long getId() {
@@ -66,12 +57,12 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getLogin() {
@@ -96,8 +87,8 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User: id = " + id + ", name = " + name + ", email = " + email + ", login = "
-                + login + ", password = " + password;
+        return "User: id = " + id + ", name = " + name + " " + surname
+                + ", login = " + login + ", password = " + password;
     }
 
     @Override

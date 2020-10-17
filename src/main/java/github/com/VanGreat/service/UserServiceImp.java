@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -16,8 +15,8 @@ public class UserServiceImp implements UserService {
     private UserDao userDao;
 
     @Override
-    public void createUser(String name, String email, String login, String password) {
-        userDao.createUser(name, email, login, password);
+    public void createUser(String name, String surname, String login, String password, Boolean role) {
+        userDao.createUser(name, surname, login, password, role);
     }
 
     @Override
@@ -41,8 +40,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getUserByName(String login) {
-        return userDao.getUserByName(login);
+    public User getUserByLogin(String login) {
+        return userDao.getUserByLogin(login);
     }
 
     @Override

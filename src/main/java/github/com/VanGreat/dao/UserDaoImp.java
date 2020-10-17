@@ -2,6 +2,8 @@ package github.com.VanGreat.dao;
 
 import github.com.VanGreat.model.Role;
 import github.com.VanGreat.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -17,10 +18,22 @@ public class UserDaoImp implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
-    public void createUser(String name, String email, String login, String password) {
-        User user = new User(name, email, login, password);
+    public void createUser(String name, String surname, String login, String password, Boolean role) {
+        User user = new User(name, surname, login, password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(new HashSet<>());
+
+        if (role.equals(true)) {
+            user.getRoles().add(getRoleByName("ROLE_ADMIN"));
+            user.getRoles().add(getRoleByName("ROLE_USER"));
+        } else {
+            user.getRoles().add(getRoleByName("ROLE_USER"));
+        }
         entityManager.persist(user);
     }
 
@@ -43,17 +56,22 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> listUsers = (List<User>) entityManager.createQuery("from User").getResultList();
+        List<User> listUsers = (List<User>) entityManager.createQuery("SELECT u FROM User u").getResultList();
         return listUsers;
     }
 
     @Override
-    public User getUserByName(String login) {
-        return entityManager.find(User.class, login);
+    public User getUserByLogin(String login) {
+        return getAllUsers().stream()
+                .filter(user -> user.getLogin().equals(login))
+                .findFirst()
+                .get();
     }
 
     @Override
     public Role getRoleByName(String name) {
-        return entityManager.find(Role.class, name);
+        return (Role) entityManager.createQuery("SELECT r FROM Role r WHERE r.name = :name")
+                .setParameter("name", name)
+                .getSingleResult();
     }
 }

@@ -2,32 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>users</title>
+    <title>All Users</title>
 </head>
 <body>
 <table border="1" style="background-color: gold">
     <tbody>
+    <a th:href="@{/logout}"><input type="submit" value="LOGOUT" style="background-color: gold"></a>
     <tr style="background-color: silver">
         <th colspan="4">
-            <h3>All Users</h3>
+            <h1>ALL USERS</h1>
         </th>
     </tr>
     <tr style="background-color: silver">
-        <th><h4 th:text="Name"></h4></th>
-        <th><h4 th:text="Email"></h4></th>
-        <th><h4>User Page</h4></th>
-        <th><h4>Delete</h4></th>
+        <th><label for="name">NAME</label></h4></th>
+        <th><label for="surname">SURNAME</label></th>
+        <th><label for="user_page">USER PAGE</label></th>
+        <th><label for="delete">DELETE</label></th>
     </tr>
     <tr th:each="user : ${users}" style="background-color: silver">
-        <td><a th:text="${user.getName()}">Name</a></td>
-        <td><a th:text="${user.getEmail()}">Email</a></td>
+        <td><a th:text="${user.getName()}" id="name">NAME</a></td>
+        <td><a th:text="${user.getSurname()}" id="surname">SURNAME</a></td>
         <td>
-            <a th:href="@{/all_users/{id}(id=${user.getId()})}">
-                <input type="submit" value="SHOW/EDIT" style="background-color: gold"/>
+            <a th:href="@{/admin/{id}(id=${user.getId()})}" id="user_page">
+                <input type="submit" value="SHOW / EDIT" style="background-color: gold"/>
             </a>
         </td>
         <td>
-            <a th:href="@{/all_users/remove_user/{id}(id=${user.getId()})}">
+            <a th:href="@{/admin/all_users/remove_user/{id}(id=${user.getId()})}" id="delete">
                 <input type="submit" value="DELETE" style="background-color: gold"/>
             </a>
         </td>
