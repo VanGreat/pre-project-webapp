@@ -23,12 +23,12 @@ public class UserDaoImp implements UserDao {
 
     @Override
     @Transactional
-    public void createUser(String name, String surname, String login, String password, Boolean role) {
+    public void createUser(String name, String surname, String login, String password, String role) {
         User user = new User(name, surname, login, password);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(new HashSet<>());
 
-        if (role.equals(true)) {
+        if (role.equals("ROLE_ADMIN")) {
             user.getRoles().add(getRoleByName("ROLE_ADMIN"));
             user.getRoles().add(getRoleByName("ROLE_USER"));
         } else {

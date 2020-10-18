@@ -9,8 +9,8 @@
     <tbody>
     <form method="POST" th:action="@{/new_user}">
         <tr style="background-color: silver">
-        <th><input type="submit" value="CREATE!" style="background-color: gold"/></th>
-        <th><label for="new" id="new">CREATE NEW USER</label></th>
+            <th><input type="submit" value="CREATE!" style="background-color: gold"/></th>
+            <th><label for="new" id="new">CREATE NEW USER</label></th>
         </tr>
         <tr style="background-color: silver">
             <th><label for="name">name: </label></th>
@@ -29,8 +29,13 @@
             <th><input th:name="password" type="text" id="password"/></th>
         </tr>
         <tr style="background-color: silver">
-            <th><label for="role">admin: </label></th>
-            <th><input th:name="role" type="checkbox" th:value="true" id="role"/></th>
+            <th><label for="role" id="role">role: </label></th>
+            <th>
+                <label for="user">user:</label>
+                <input th:name="role" type="radio" value="ROLE_USER" checked id="user"/>
+                <label for="admin">admin:</label>
+                <input th:name="role" type="radio" value="ROLE_ADMIN" id="admin"/>
+            </th>
         </tr>
     </form>
     </tbody>

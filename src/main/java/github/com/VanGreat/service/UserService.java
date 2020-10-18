@@ -6,7 +6,7 @@ import github.com.VanGreat.model.User;
 import java.util.List;
 
 public interface UserService {
-    void createUser(String name, String surname, String login, String password, Boolean role);
+    void createUser(String name, String surname, String login, String password, String role);
     void editUser(User user);
     void deleteUser(Long id);
     User getUser(Long id);
