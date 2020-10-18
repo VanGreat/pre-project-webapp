@@ -27,6 +27,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "passwordConfirm")
+    private String passwordConfirm;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
@@ -39,6 +42,7 @@ public class User implements UserDetails {
         this.surname = surname;
         this.login = login;
         this.password = password;
+        this.passwordConfirm = password;
     }
 
     public Long getId() {
@@ -77,6 +81,14 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -88,7 +100,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User: id = " + id + ", name = " + name + " " + surname
-                + ", login = " + login + ", password = " + password;
+                + ", login = " + login + ", password = " + passwordConfirm;
     }
 
     @Override

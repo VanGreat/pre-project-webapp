@@ -985,11 +985,15 @@ ROLE_ID</ColNames>
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="304" parent="290" name="surname">
+    <column id="304" parent="290" name="passwordConfirm">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="305" parent="290" name="PRIMARY">
+    <column id="305" parent="290" name="surname">
+      <Position>6</Position>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <key id="306" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

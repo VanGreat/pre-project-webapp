@@ -25,7 +25,7 @@ public class UserDaoImp implements UserDao {
     @Transactional
     public void createUser(String name, String surname, String login, String password, Boolean role) {
         User user = new User(name, surname, login, password);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(password));
         user.setRoles(new HashSet<>());
 
         if (role.equals(true)) {
@@ -40,6 +40,9 @@ public class UserDaoImp implements UserDao {
     @Override
     @Transactional
     public void editUser(User user) {
+        user.setPasswordConfirm(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPasswordConfirm()));
+        user.setRoles(getUserByLogin(user.getLogin()).getRoles());
         entityManager.merge(user);
     }
 
@@ -71,7 +74,6 @@ public class UserDaoImp implements UserDao {
     @Override
     public Role getRoleByName(String name) {
         return (Role) entityManager.createQuery("SELECT r FROM Role r WHERE r.name = :name")
-                .setParameter("name", name)
-                .getSingleResult();
+                .setParameter("name", name).getSingleResult();
     }
 }
